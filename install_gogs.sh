@@ -8,12 +8,10 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 else
 
-    
-#intalação go lang
+
+# go lang installation
 
     donwload="go$VERSION.linux-amd64.tar.gz"
-
-
     echo "$dowload is being downloaded !!!!"
     wget https://storage.googleapis.com/golang/$dowload -O /tmp/go.tar.gz
 
@@ -29,17 +27,14 @@ else
     } >> "$HOME/.${shell_profile}"
 
     mkdir -p $HOME/go/{src,pkg,bin}
-    echo -e "\nGo $VERSION was installed.\nMake sure to relogin into your shell or run:"
-    echo -e "\n\tsource $HOME/.${shell_profile}\n\nto update your environment variables."
-    echo "Tip: Opening a new terminal window usually just works. :)"
     rm -f /tmp/go.tar.gz
 
+# git installation
+
+    sudo apt-get install -y git
+    adduser --disabled-login --gecos 'Gogs' git
+
 #gogs installation
-
-
-    MY_IP=$(ip a s|sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}' | tr '\n' ' ')
-
-  
 
     echo "" >>/etc/hosts
     echo "$1  $2" >>/etc/hosts
@@ -47,7 +42,6 @@ else
     echo "$2" > /proc/sys/kernel/hostname
 
     apt-get install -y wget nginx git-core mysql-client mysql-server
-    adduser --disabled-login --gecos 'Gogs' git
 
     cd /home/git
     wget --no-check-certificate https://dl.gogs.io/0.11.4/linux_amd64.tar.gz
@@ -56,7 +50,6 @@ else
     echo "CREATE USER 'gogs'@'localhost' IDENTIFIED BY $3;" >>/home/git/gogs/scripts/mysql.sql
     echo "GRANT ALL PRIVILEGES ON gogs.* TO 'gogs'@'localhost';" >>/home/git/gogs/scripts/mysql.sql 
 
-    echo "--------------------"
     mysql -p < /home/git/gogs/scripts/mysql.sql
 
     chmod +x /home/git/gogs/gogs
@@ -71,7 +64,6 @@ else
     systemctl daemon-reload
     systemctl enable gogs.service
     systemctl start gogs.service
-
 
     echo 'server {
         listen          IP:80;
