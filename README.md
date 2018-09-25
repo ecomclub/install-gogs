@@ -1,2 +1,2 @@
 # install-gogs
-bash for gogs installation and all necessary packages
+Bash for Gogs setup on RHEL based VPS
