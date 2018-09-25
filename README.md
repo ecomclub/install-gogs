@@ -1,2 +1,2 @@
 # install-gogs
-bash for google installation and all necessary packages
+bash for gogs installation and all necessary packages
