@@ -11,12 +11,15 @@ else
 
 # go lang installation
 
-    donwload="go$VERSION.linux-amd64.tar.gz"
+# Download Go and extract the compressed file:
+
+    donwload="go$VERSION.linux-amd64.tar.gz" 
     echo "$dowload is being downloaded !!!!"
     wget https://storage.googleapis.com/golang/$dowload -O /tmp/go.tar.gz
 
     tar -C "$HOME" -xzf /tmp/go.tar.gz
-    mv "$HOME/go" "$HOME/.go"
+    mv "$HOME/go" "$HOME/.go"# Set the GOPATH environment variable to specify the location of our workspace.
+
     touch "$HOME/.${shell_profile}"
     {
         echo '# GoLang'
@@ -32,7 +35,7 @@ else
 # git installation
 
     sudo apt-get install -y git
-    adduser --disabled-login --gecos 'Gogs' git
+    adduser --disabled-login --gecos 'Gogs' git # When you install Go and Gogs, it will be under the user git.
 
 #gogs installation
 
@@ -41,7 +44,7 @@ else
     hostnamectl set-hostname $2
     echo "$2" > /proc/sys/kernel/hostname
 
-    apt-get install -y wget nginx git-core mysql-client mysql-server
+    apt-get install -y wget nginx git-core mysql-client mysql-server # Install nginx from the repository:
 
     cd /home/git
     wget --no-check-certificate https://dl.gogs.io/0.11.4/linux_amd64.tar.gz
@@ -57,15 +60,16 @@ else
 
     chown -R git:git /home/git/gogs
     chown -R git:git /home/git/gogs/*
-
-    cp /home/git/gogs/scripts/systemd/gogs.service /etc/systemd/system/
+    cp /home/git/gogs/scripts/systemd/gogs.service /etc/systemd/system/ # Download and install Gogs
     sed -i 's|mysqld.service|mysqld.service mysql.service|' /etc/systemd/system/gogs.service
 
     systemctl daemon-reload
     systemctl enable gogs.service
     systemctl start gogs.service
-
-    echo 'server {
+    
+# Set nginx as the reverse proxy for Gogs. Using sudo, create a new file named /etc/nginx/sites-available/gogs
+   
+   echo 'server {
         listen          IP:80;
         server_name     DOMAIN;
 
@@ -83,9 +87,8 @@ else
     service nginx restart
 
     echo "installation completed"
-    
-    systemctl enable gogs
-    systemctl start gogs
-    systemctl status gogs
+
+    systemctl enable gogs.service
+    systemctl start gogs.service
 
 fi
