@@ -83,5 +83,9 @@ else
     service nginx restart
 
     echo "installation completed"
+    
+    systemctl enable gogs
+    systemctl start gogs
+    systemctl status gogs
 
 fi
