@@ -9,7 +9,7 @@ if [ "$(id -u)" != "0" ]; then
 else
 
 
-# go lang installation
+# Golang installation
 
 # Download Go and extract the compressed file:
 
@@ -37,7 +37,7 @@ else
     sudo apt-get install -y git
     adduser --disabled-login --gecos 'Gogs' git # When you install Go and Gogs, it will be under the user git.
 
-#gogs installation
+# Gogs installation
 
     echo "" >>/etc/hosts
     echo "$1  $2" >>/etc/hosts
